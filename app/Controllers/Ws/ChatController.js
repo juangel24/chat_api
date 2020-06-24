@@ -1,4 +1,5 @@
 'use strict'
+const Message = use('App/Models/Message')
 const users_array = []
 
 class ChatController {
@@ -8,14 +9,17 @@ class ChatController {
   }
 
   onMessage(data) {
+    const msg = new Message()
+    msg.text = data
+    msg.sender_id = 1
+    msg.save()
+
     this.socket.broadcast('message', data)
-    console.log(this.socket.id);
-    console.log(data);
   }
 
   onNewUser(user){
     console.log(user);
-    
+
     if (user.length !== null || user.length !== '' || user.length !== 0) {
       users_array.push(user)
       this.socket.broadcast('newUser', users_array)

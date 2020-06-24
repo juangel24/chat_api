@@ -8,14 +8,14 @@ class ChatController {
     this.request = request
   }
 
-  onMessage(data) {
+  async onMessage(data) {
     const msg = new Message()
 
     msg.text = data.text
     msg.sender_id = data.sender_id
     msg.save()
 
-    this.socket.broadcastToAll('data', Message.pickInverse(3))
+    this.socket.broadcastToAll('data', await Message.pickInverse(50))
   }
 
   onNewUser(user){

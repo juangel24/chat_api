@@ -16,7 +16,7 @@ Route.group(() => {
   // User login and register authentification
   Route.post('login', 'AuthController.login')
   // User registration
-  Route.post('signup', 'AuthController.signUp')
+  Route.post('signup', 'AuthController.signup')
   // Logout
   Route.get('logout', 'AuthController.logout').middleware('auth')
 }).prefix('api');

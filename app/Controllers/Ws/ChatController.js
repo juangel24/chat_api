@@ -11,10 +11,10 @@ class ChatController {
   async onMessage(data) {
     const msg = new Message()
     msg.text = data.text
-    msg.sender_id = data.id
+    msg.sender_id = data.sender_id
     msg.save()
 
-    this.socket.broadcast('message', await Message.pickInverse(50))
+    this.socket.broadcast('message', msg)
   }
 
   onNewUser(user){

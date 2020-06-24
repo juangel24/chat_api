@@ -12,7 +12,10 @@ class ChatController {
     const msg = new Message()
     msg.text = data.text
     msg.sender_id = data.sender_id
-    msg.save()
+    await msg.save()
+
+    let user = await msg.user().fetch()
+    msg.username = user.username
 
     this.socket.broadcast('message', msg)
   }

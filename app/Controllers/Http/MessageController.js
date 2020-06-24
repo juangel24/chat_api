@@ -4,13 +4,13 @@ const Message = use('App/Models/Message')
 class MessageController {
   async index({ params }) {
     const cant = parseInt(params.cant)
-    let msgQuery = Message.query().select('text', 'messages.created_at', 'users.username')
+    let query = Message.query().select('messages.*', 'users.username')
     .innerJoin('users', 'users.id', 'messages.sender_id')
     .orderBy('messages.created_at', 'desc')
 
-    if (cant) { msgQuery.limit(cant) }
+    if (cant) { query.limit(cant) }
 
-    return msgQuery.fetch()
+    return query.fetch()
   }
 }
 

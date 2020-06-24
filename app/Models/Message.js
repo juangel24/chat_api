@@ -6,7 +6,7 @@ const Encryption = use('Encryption')
 
 class Message extends Model {
   user () {
-    return this.belongsTo('App/Models/User', 'sender_id', 'id')
+    return this.belongsTo('App/Models/User', 'sender_id')
   }
 
   /*static boot () {

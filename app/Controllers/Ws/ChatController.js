@@ -1,4 +1,5 @@
 'use strict'
+const users_array = []
 
 class ChatController {
   constructor({ socket, request }) {
@@ -8,6 +9,16 @@ class ChatController {
 
   onMessage(data) {
     this.socket.broadcastToAll('data', data)
+  }
+
+  onNewUser(user){
+    console.log(user);
+    
+    if (user.length !== null || user.length !== '' || user.length !== 0) {
+      users_array.push(user)
+      this.socket.broadcast('newUser', users_array)
+      console.log(users_array)
+    }
   }
 }
 

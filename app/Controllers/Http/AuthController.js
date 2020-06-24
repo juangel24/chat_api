@@ -2,45 +2,37 @@
 const User = use('App/Models/User')
 
 class AuthController {
-  async login({ request, auth, response }) {
+  async login({ request, auth }) {
     const { email, password } = request.all()
 
-    if (await auth.attempt(email, password)) {
-      let user = await User.findBy('email', email)
-      let token = await auth.generate(user)
+    let token = await auth.attempt(email, password)
+    let user = await User.findBy('email', email)
 
-      Object.assign(user, token)
-      return response.json(user)
-    }
+    return this._user(token, user)
   }
 
-  async logout() {
-    await auth.logout()
-  }
+  async logout() { await auth.logout() }
 
-  async signUp({ request, auth, response }) {
+  async signup({ request, auth }) {
     const data = request.only(['username', 'email', 'password'])
 
     // looking for user in database
-    let userExists = await User.findBy('username', data.username)
-
-    // if user doesn't exist, it'll be saved in DB
-    if (userExists) {
-      return { msg: 'username exists' }
-    }
+    let user = await User.findBy('username', data.username)
+    if (user) return { msg: 'username taken' }
 
     // looking for email in database
-    userExists = await User.findBy('email', data.email)
-    if (userExists) {
-      return { msg: 'email taken' }
-    }
+    user = await User.findBy('email', data.email)
+    if (user) return { msg: 'email taken' }
 
-    const user = await User.create(data)
+    user = await User.create(data)
     let token = await auth.generate(user)
 
-    Object.assign(user, token)
+    return this._user(token, user)
+  }
 
-    return response.json(user)
+  async _user(token, user) {
+    Object.assign(user, token)
+    return user
   }
 }
 

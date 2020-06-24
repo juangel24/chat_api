@@ -2,7 +2,7 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-const Encryption = use('Encryption')
+//const Encryption = use('Encryption')
 
 class Message extends Model {
   user () {

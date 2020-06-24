@@ -9,13 +9,13 @@ class Message extends Model {
     return this.belongsTo('App/Models/User')
   }
 
-  static boot () {
+  /*static boot () {
     super.boot()
 
     this.addHook('beforeSave', async (messageInstance) => {
       messageInstance.text = await Encryption.encrypt(messageInstance)
     })
-  }
+  }*/
 }
 
 module.exports = Message

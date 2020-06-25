@@ -17,20 +17,8 @@ class ChatController {
 
     let user = await msg.user().fetch()
     msg.username = user.username
-    users_messsages.push(msg)
-    console.log(msg.$attributes);
-    
-    this.socket.broadcast('message', users_messsages)
-  }
 
-  onNewUser(user){
-    console.log(user);
-
-    if (user.length !== null || user.length !== '' || user.length !== 0) {
-      users_array.push(user)
-      this.socket.broadcast('newUser', users_array)
-      console.log(users_array)
-    }
+    this.socket.broadcast('message', msg)
   }
 }
 

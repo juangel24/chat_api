@@ -17,10 +17,29 @@ class ChatController {
 
     let user = await msg.user().fetch()
     msg.username = user.username
-    users_messsages.push(msg)
-    console.log(msg.$attributes);
+    users_messsages.push(msg.$attributes)
+
+    const datos = {
+      id: data.sender_id,
+      text: data.text,
+      username: users_messsages
+    }
+    // users_messsages.push(datos)
+    // console.log(users_messsages);
     
-    this.socket.broadcast('message', users_messsages)
+    await this.socket.broadcast('message', datos)
+    // this.socket.broadcast('showuser', user.username)
+  }
+
+  onShowData(data){
+    // const msg = new Message()
+    // msg.text = data.text
+    // msg.sender_id = data.sender_id
+    // await msg.save()
+
+    // let user = await msg.user().fetch()
+    // msg.username = user.username
+    // users_messsages.push(msg.$attributes)
   }
 
   onNewUser(user){

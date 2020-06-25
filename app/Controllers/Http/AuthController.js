@@ -7,7 +7,8 @@ class AuthController {
 
     let token = await auth.attempt(email, password)
     let user = await User.findBy('email', email)
-
+    console.log(request.all());
+    
     return this._user(token, user)
   }
 

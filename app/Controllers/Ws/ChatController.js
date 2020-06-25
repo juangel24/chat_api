@@ -1,6 +1,7 @@
 'use strict'
 const Message = use('App/Models/Message')
 const users_array = []
+const users_messsages = []
 
 class ChatController {
   constructor({ socket, request }) {
@@ -16,8 +17,10 @@ class ChatController {
 
     let user = await msg.user().fetch()
     msg.username = user.username
-
-    this.socket.broadcast('message', msg)
+    users_messsages.push(msg)
+    console.log(msg.$attributes);
+    
+    this.socket.broadcast('message', users_messsages)
   }
 
   onNewUser(user){
